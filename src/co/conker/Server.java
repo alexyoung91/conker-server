@@ -22,6 +22,6 @@ public class Server {
 			System.out.println("Failed to connect to MySQL! Error: " + e);
 		}
 		
-		System.out.println("Connected OK.");
+		System.out.println("Connected OK!");
 	}
 }
