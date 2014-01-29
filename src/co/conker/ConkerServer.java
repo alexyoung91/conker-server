@@ -73,7 +73,8 @@ public class ConkerServer extends AbstractHandler {
 					project.put("endDay", res.getInt("endDay"));
 					project.put("endMonth", res.getInt("endMonth"));
 					project.put("endYear", res.getInt("endYear"));
-					project.put("author", res.getString("firstName"));
+					project.put("authorFirstName", res.getString("firstName"));
+					project.put("authorLastName", res.getString("User.lastName"));
 					project.put("photoSource", res.getString("source"));
 					projectsArray.put(project);
 				}
