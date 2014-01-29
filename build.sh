@@ -1,1 +1,0 @@
-javac src/co/conker/* -d bin
