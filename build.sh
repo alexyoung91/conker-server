@@ -1,1 +1,1 @@
-javac -cp "lib/servlet-api-2.5.jar;lib/jetty-all-9.0.4.v20130625.jar;lib/mysql-connector-java-5.1.28-bin.jar" src/co/conker/* -d bin
+javac -cp "lib/servlet-api-2.5.jar:lib/jetty-all-9.0.4.v20130625.jar:lib/mysql-connector-java-5.1.28-bin.jar" src/co/conker/* -d bin
