@@ -29,13 +29,6 @@ public class ConkerServer extends AbstractHandler {
 		dbURL = "jdbc:mysql://localhost:3306/Conker";
 		dbUsername = "conker";
 		dbPassword = "lolbanter2910";
-		
-		try {
-			conn = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
-		} catch (Exception e) {
-			System.out.println("Failed to connect to MySQL! Error: " + e);
-			System.exit(0);
-		}
 	}
 
 	@Override
@@ -47,8 +40,15 @@ public class ConkerServer extends AbstractHandler {
 		String output = "";
 		
 		try {
+			conn = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
+		} catch (Exception e) {
+			System.out.println("Failed to connect to MySQL! Error: " + e);
+			System.exit(0);
+		}
+		
+		try {
 			Statement stmt = conn.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT * FROM User");
+			ResultSet res = stmt.executeQuery("SELECT * FROM User;");
 			
 			String names = "";
 			
@@ -62,6 +62,8 @@ public class ConkerServer extends AbstractHandler {
 			System.out.println("Failed to execute SQL query! Error: " + e);
 			output = "SQL Error.";
 		}
+		
+		conn = null;
 		
         //response.getWriter().println("<h1>Hello World</h1>");
 		response.getWriter().println(output);
