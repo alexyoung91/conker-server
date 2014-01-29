@@ -49,7 +49,7 @@ public class ConkerServer extends AbstractHandler {
 		
 		String names = "";
 		
-		while(buildingsRS.next()) {
+		while(res.next()) {
 			//Integer id = buildingsRS.getInt("id");
 			String firstName = res.getString("firstName");
 			names += firstName + " ";
