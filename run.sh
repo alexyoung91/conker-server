@@ -1,1 +1,1 @@
-java -cp "bin;lib/*" co.conker.Server
+java -cp "bin:lib/*" co.conker.Server
