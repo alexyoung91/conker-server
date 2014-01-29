@@ -2,5 +2,5 @@ Conker Server
 =============
 
 Jetty Server for Android app
-Task 2
+CS2001 Task 2
 
