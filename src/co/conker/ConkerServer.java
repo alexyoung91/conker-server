@@ -18,6 +18,7 @@ import java.sql.Statement;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 public class ConkerServer extends AbstractHandler {
 
@@ -42,38 +43,54 @@ public class ConkerServer extends AbstractHandler {
 		
 		String output = "";
 		
-		try {
-			conn = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
-		} catch (Exception e) {
-			System.out.println("Failed to connect to MySQL! Error: " + e);
-			System.exit(0);
-		}
+		JSONArray projectsArray;
 		
 		try {
-			Statement stmt = conn.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT * FROM Projects;");
+			projectsArray = new JSONArray();
 			
-			String names = "";
-			
-			while(res.next()) {
-				JSONObject o = new JSONObject();
-				String title = res.getString("title");
-				names += firstName + " ";
+			try {
+				conn = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
+			} catch (Exception e) {
+				System.out.println("Failed to connect to MySQL! Error: " + e);
+				System.exit(0);
 			}
 			
-			output = names;
-		} catch (Exception e) {
-			System.out.println("Failed to execute SQL query! Error: " + e);
-			output = "SQL Error.";
+			try {
+				// Join with user table??
+				Statement stmt = conn.createStatement();
+				ResultSet res = stmt.executeQuery("SELECT * FROM Projects ORDER BY id ASC;");
+				
+				while(res.next()) {
+					JSONObject project = new JSONObject();
+					project.put("title", res.getString("title"));
+					project.put("description", res.getString("description"));
+					project.put("noVolunteersNeeded", res.getInt("noVolunteersNeeded"));
+					project.put("locationLat", res.getDouble("locationLat"));
+					project.put("locationLong", res.getDouble("locationLong"));
+					project.put("startDay", res.getInt("startDay"));
+					project.put("startMonth", res.getInt("startMonth"));
+					project.put("startYear", res.getInt("startYear"));
+					project.put("userID", res.getInt("userID"));
+					projectsArray.put(project);
+				}
+				
+				stmt = null;
+				res = null;
+				
+				output = projectsArray.toString();
+				
+			} catch (Exception e) {
+				System.out.println("Failed to execute SQL query! Error: " + e);
+				System.exit(0);
+			}
 		} catch (JSONException e) {
-			System.out.println("Failed with JSON.");
-			output = "JSON Error.";
+			System.out.println("JSON Error.");
+			System.exit(0);
 		}
 		
 		conn = null;
 		
-		//response.getWriter().println(output);
-		response.getWriter().println("{}");
+		response.getWriter().println(output);
     }
 	
 	public static void main(String[] args) throws Exception {
