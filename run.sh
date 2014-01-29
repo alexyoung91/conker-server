@@ -1,0 +1,1 @@
+java -cp "bin/:lib/*" co.conker.Server
