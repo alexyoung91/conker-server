@@ -58,7 +58,7 @@ public class ConkerServer extends AbstractHandler {
 			try {
 				// Join with user table??
 				Statement stmt = conn.createStatement();
-				ResultSet res = stmt.executeQuery("SELECT * FROM Projects ORDER BY id ASC;");
+				ResultSet res = stmt.executeQuery("SELECT * FROM Project ORDER BY id ASC;");
 				
 				while(res.next()) {
 					JSONObject project = new JSONObject();
