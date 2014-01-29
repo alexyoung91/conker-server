@@ -70,6 +70,9 @@ public class ConkerServer extends AbstractHandler {
 					project.put("startDay", res.getInt("startDay"));
 					project.put("startMonth", res.getInt("startMonth"));
 					project.put("startYear", res.getInt("startYear"));
+					project.put("endDay", res.getInt("endDay"));
+					project.put("endMonth", res.getInt("endMonth"));
+					project.put("endYear", res.getInt("endYear"));
 					project.put("userID", res.getInt("userID"));
 					projectsArray.put(project);
 				}
@@ -77,7 +80,7 @@ public class ConkerServer extends AbstractHandler {
 				stmt = null;
 				res = null;
 				
-				output = projectsArray.toString(4);
+				output = (new JSONObject().put("projects", projectsArray)).toString(4);
 				
 			} catch (Exception e) {
 				System.out.println("Failed to execute SQL query! Error: " + e);
