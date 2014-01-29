@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.json.JSONObject;
-import org.josn.JSONArray;
+import org.json.JSONArray;
 
 public class ConkerServer extends AbstractHandler {
 
@@ -36,7 +36,7 @@ public class ConkerServer extends AbstractHandler {
 
 	@Override
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("text/html;charset=utf-8");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 		
@@ -51,12 +51,13 @@ public class ConkerServer extends AbstractHandler {
 		
 		try {
 			Statement stmt = conn.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT * FROM User;");
+			ResultSet res = stmt.executeQuery("SELECT * FROM Projects;");
 			
 			String names = "";
 			
 			while(res.next()) {
-				String firstName = res.getString("firstName");
+				JSONObject o = new JSONObject();
+				String title = res.getString("title");
 				names += firstName + " ";
 			}
 			
@@ -64,12 +65,15 @@ public class ConkerServer extends AbstractHandler {
 		} catch (Exception e) {
 			System.out.println("Failed to execute SQL query! Error: " + e);
 			output = "SQL Error.";
+		} catch (JSONException e) {
+			System.out.println("Failed with JSON.");
+			output = "JSON Error.";
 		}
 		
 		conn = null;
 		
-        //response.getWriter().println("<h1>Hello World</h1>");
-		response.getWriter().println(output);
+		//response.getWriter().println(output);
+		response.getWriter().println("{}");
     }
 	
 	public static void main(String[] args) throws Exception {
