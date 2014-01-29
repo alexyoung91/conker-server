@@ -41,7 +41,7 @@ public class ConkerServer extends AbstractHandler {
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 		
-		String output = "";
+		String output = "-";
 		
 		JSONArray projectsArray;
 		
@@ -58,7 +58,7 @@ public class ConkerServer extends AbstractHandler {
 			try {
 				// Join with user table??
 				Statement stmt = conn.createStatement();
-				ResultSet res = stmt.executeQuery("SELECT * FROM Project ORDER BY id ASC;");
+				ResultSet res = stmt.executeQuery("SELECT * FROM User, Project, ProjectPhoto WHERE User.id = Project.userID AND ProjectPhoto.projectID = Project.id ORDER BY Project.id ASC;");
 				
 				while(res.next()) {
 					JSONObject project = new JSONObject();
@@ -73,14 +73,18 @@ public class ConkerServer extends AbstractHandler {
 					project.put("endDay", res.getInt("endDay"));
 					project.put("endMonth", res.getInt("endMonth"));
 					project.put("endYear", res.getInt("endYear"));
-					project.put("userID", res.getInt("userID"));
+					project.put("author", res.getString("firstName"));
+					project.put("photoSource", res.getString("source"));
 					projectsArray.put(project);
 				}
 				
 				stmt = null;
 				res = null;
 				
-				output = (new JSONObject().put("projects", projectsArray)).toString(4);
+				JSONObject o = new JSONObject();
+				o.put("projects", projectsArray);
+				
+				output = o.toString(4);
 				
 			} catch (Exception e) {
 				System.out.println("Failed to execute SQL query! Error: " + e);
