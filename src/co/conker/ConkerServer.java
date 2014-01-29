@@ -77,7 +77,7 @@ public class ConkerServer extends AbstractHandler {
 				stmt = null;
 				res = null;
 				
-				output = projectsArray.toString();
+				output = projectsArray.toString(4);
 				
 			} catch (Exception e) {
 				System.out.println("Failed to execute SQL query! Error: " + e);
