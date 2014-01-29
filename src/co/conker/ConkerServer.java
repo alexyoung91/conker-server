@@ -44,24 +44,27 @@ public class ConkerServer extends AbstractHandler {
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 		
-		Statement stmt = dbCon.createStatement();
-        ResultSet res = stmt.executeQuery("SELECT * FROM User");
+		String output = "";
 		
-		String names = "";
-		
-		while(res.next()) {
-			//Integer id = buildingsRS.getInt("id");
-			String firstName = res.getString("firstName");
-			names += firstName + " ";
-			//String hexcode = buildingsRS.getString("hexcode");
-			//String description = buildingsRS.getString("description");
-			//String centre_latitude = buildingsRS.getString("centre_latitude");
-			//String centre_longitude = buildingsRS.getString("centre_longitude");
-			//System.out.println("Building [Name: " + name + " | Hexcode: " + hexcode + " | Description: " + description + "]");
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet res = stmt.executeQuery("SELECT * FROM User");
+			
+			String names = "";
+			
+			while(res.next()) {
+				String firstName = res.getString("firstName");
+				names += firstName + " ";
+			}
+			
+			output = names;
+		} catch (Exception e) {
+			System.out.println("Failed to execute SQL query! Error: " + e);
+			output = "SQL Error.";
 		}
 		
         //response.getWriter().println("<h1>Hello World</h1>");
-		response.getWriter().println(names);
+		response.getWriter().println(output);
     }
 	
 	public static void main(String[] args) throws Exception {
