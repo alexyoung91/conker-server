@@ -37,18 +37,18 @@ public class ConkerServer extends AbstractHandler {
 		String dbUsername = "conker";
 		String dbPassword = "lolbanter2910";
 
+		/*
 		try {
 			dbCon = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
 		} catch (Exception e) {
 			System.out.println("Failed to connect to MySQL! Error: " + e);
 		}
+		*/
 		
 		System.out.println("Connected OK.");
  
         server.start();
         server.join();
-		
-		
 	}
 }
 
