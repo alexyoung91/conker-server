@@ -32,10 +32,10 @@ public class ConkerServer extends AbstractHandler {
         server.setHandler(new ConkerServer());
 		
 		// Connect to MySQL
-		Connection dbCon = null;
-		String dbURL = "jdbc:mysql://localhost:3306/Conker";
-		String dbUsername = "conker";
-		String dbPassword = "lolbanter2910";
+		//Connection dbCon = null;
+		//String dbURL = "jdbc:mysql://localhost:3306/Conker";
+		//String dbUsername = "conker";
+		//String dbPassword = "lolbanter2910";
 
 		/*
 		try {
@@ -48,7 +48,7 @@ public class ConkerServer extends AbstractHandler {
 		System.out.println("Connected OK.");
  
         server.start();
-        //server.join();
+        server.join();
 	}
 }
 
