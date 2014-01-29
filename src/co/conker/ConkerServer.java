@@ -48,7 +48,7 @@ public class ConkerServer extends AbstractHandler {
 		System.out.println("Connected OK.");
  
         server.start();
-        server.join();
+        //server.join();
 	}
 }
 
