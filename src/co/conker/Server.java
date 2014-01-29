@@ -8,11 +8,11 @@ import java.sql.Statement;
 
 public class Server {
 	public static void main(String[] args) {
-		System.out.println("Hello World");
+		System.out.println("DB Test");
 		
 		// Connect to MySQL
 		Connection dbCon = null;
-		String dbURL = "jdbc:mysql://conker.co:3306/Conker";
+		String dbURL = "jdbc:mysql://localhost:3306/Conker";
 		String dbUsername = "conker";
 		String dbPassword = "lolbanter2910";
 
@@ -22,6 +22,6 @@ public class Server {
 			System.out.println("Failed to connect to MySQL! Error: " + e);
 		}
 		
-		System.out.println("Connected OK!");
+		System.out.println("Connected OK.");
 	}
 }
