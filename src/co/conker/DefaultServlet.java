@@ -31,28 +31,22 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 public class DefaultServlet extends HttpServlet {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		response.setStatus(HttpServletResponse.SC_OK);
 
-	private static String pageContent = "";
-
-	public DefaultServlet() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("/home/ubuntu/ConkerResources/staticPages/ConkerForms.html"));
         try {
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			
 			while (line != null) {
-				pageContent += line;
+				response.getWriter().println(line);
 				line = br.readLine();
 			}
         } finally {
 			br.close();
         }
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.getWriter().println(pageContent);
 		
 		//response.getWriter().println("default");
 		//response.getWriter().println("session=" + request.getSession(true).getId());
