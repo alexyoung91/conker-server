@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.MultipartConfigElement;
  
 import java.io.IOException;
  
@@ -39,8 +40,19 @@ public class ConkerServer {
 		context.setContextPath("/");
         server.setHandler(context);
 		
+		// Display the development forms
 		context.addServlet(new ServletHolder(new DefaultServlet()),"/*");
+		
+		// Post a project
+		ServletHolder sh = new ServletHolder(new ProjectPostServlet());
+		sh.getRegistration().setMultipartConfig(new MultipartConfigElement("/home/ubuntu/ConkerResources/projectImages", 1048576, 1048576, 262144));
+		context.addServlet(sh, "/projectPost/*");
+		//context.addServlet(new ServletHolder(new ProjectPostServlet()), "/projectPost/*");
+		
+		// Get projects nearest to a specified lat and long
         context.addServlet(new ServletHolder(new ProjectsServlet()), "/projects/*");
+		
+		// Get project image by specifying project ID
         context.addServlet(new ServletHolder(new ProjectImageServlet()),"/projectImage/*");
 		 
         server.start();
