@@ -41,7 +41,13 @@ public class ConkerServer {
         server.setHandler(context);
 		
 		// Display the development forms
-		context.addServlet(new ServletHolder(new DefaultServlet()),"/*");
+		context.addServlet(new ServletHolder(new DefaultServlet()), "/*");
+		
+		// Login
+		context.addServlet(new ServletHolder(new LoginServlet()), "/login/*");
+		
+		// Register
+		context.addServlet(new ServletHolder(new RegisterServlet()), "/register/*");
 		
 		// Post a project
 		ServletHolder sh = new ServletHolder(new ProjectPostServlet());
@@ -53,7 +59,7 @@ public class ConkerServer {
         context.addServlet(new ServletHolder(new ProjectsServlet()), "/projects/*");
 		
 		// Get project image by specifying project ID
-        context.addServlet(new ServletHolder(new ProjectImageServlet()),"/projectImage/*");
+        context.addServlet(new ServletHolder(new ProjectImageServlet()), "/projectImage/*");
 		 
         server.start();
         server.join();
