@@ -31,8 +31,6 @@ import java.util.Date;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import java.security.MessageDigest;
-
 public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
@@ -49,42 +47,29 @@ public class LoginServlet extends HttpServlet {
 			
 		}
 		
-		System.out.println("email: " + email + ", " + "password: " + password);
-		
 		Connection conn;
 				
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(ConkerServer.dbURL, ConkerServer.dbUsername, ConkerServer.dbPassword);
 			
-			PreparedStatement pstmt = conn.prepareStatement("SELECT email, password, salt FROM User WHERE email = ?");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT email, password FROM User WHERE email = ?");
 			pstmt.setString(1, email);
 			ResultSet res = pstmt.executeQuery();
 			
 			if (res.next()) {
 				String dbEmail = res.getString("email");
 				String dbPassword = res.getString("password");
-				String dbSalt = res.getString("salt");
-				
-				// Implement hashing n ting...
 				
 				// Hash the password
-				MessageDigest md = MessageDigest.getInstance("SHA-256");
+				String hash = BCrypt.hashpw(password, BCrypt.gensalt());
 				
-				md.update(password.getBytes("UTF-8")); // Change this to "UTF-16" if needed
-				byte[] digest = md.digest();
-				String hash = new String(digest);
-				
-				MessageDigest md2 = MessageDigest.getInstance("SHA-256");
-				
-				hash = dbSalt + hash;
-				md2.update(hash.getBytes("UTF-8"));
-				byte[] digest2 = md2.digest();
-				String hash2 = new String(digest2);
-				
-				System.out.println("Final hash: " + hash2);
-				
-				if (email.equals(dbEmail) && password.equals(dbPassword)) {
+				System.out.println("email: " + email);
+				System.out.println("password: " + password);
+				System.out.println("hashed password: " + hash);
+				System.out.println("db hashed password: " + dbPassword);
+
+				if (email.equals(dbEmail) && BCrypt.checkpw(dbPassword, password)) {
 					response.getWriter().println("login done");
 				} else {
 					response.getWriter().println("login not done");
@@ -100,3 +85,4 @@ public class LoginServlet extends HttpServlet {
 		//response.getWriter().println("session=" + request.getSession(true).getId());
 	}
 }
+
