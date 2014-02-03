@@ -40,6 +40,9 @@ public class RegisterServlet extends HttpServlet {
 		response.setContentType("text/html");
 		response.setStatus(HttpServletResponse.SC_OK);
 
+		// How to use multipart: http://stackoverflow.com/questions/15729777/servlet-get-parameter-from-multipart-form-in-tomcat-7
+		// The same may apply to servlets that are implemented using jetty...
+
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
