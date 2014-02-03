@@ -34,7 +34,7 @@ public class DefaultServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		response.setStatus(HttpServletResponse.SC_OK);
-
+		
 		BufferedReader br = new BufferedReader(new FileReader("/home/ubuntu/ConkerServer/staticPages/ConkerForms.html"));
         try {
 			StringBuilder sb = new StringBuilder();
