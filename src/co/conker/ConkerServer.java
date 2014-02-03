@@ -71,3 +71,4 @@ public class ConkerServer {
 }
 
 // sudo update-alternatives --config java // to change java version on debian/ubuntu
+

@@ -89,3 +89,4 @@ class ProjectsServlet extends HttpServlet {
 		//response.getWriter().println("session=" + request.getSession(true).getId());
 	}
 }
+

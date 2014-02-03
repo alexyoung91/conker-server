@@ -750,3 +750,4 @@ public class BCrypt {
 		return (hashed.compareTo(hashpw(plaintext, hashed)) == 0);
 	}
 }
+

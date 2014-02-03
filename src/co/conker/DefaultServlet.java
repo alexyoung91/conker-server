@@ -52,3 +52,4 @@ public class DefaultServlet extends HttpServlet {
 		//response.getWriter().println("session=" + request.getSession(true).getId());
 	}
 }
+

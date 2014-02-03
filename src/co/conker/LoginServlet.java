@@ -40,11 +40,13 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		if (email == null || email.isEmpty()) {
-			
+			response.getWriter().println("please enter a username");
+			return;
 		}
 		
 		if (password == null || password.isEmpty()) {
-			
+			response.getWriter().println("please enter a password");
+			return;
 		}
 		
 		Connection conn;
@@ -56,30 +58,24 @@ public class LoginServlet extends HttpServlet {
 			PreparedStatement pstmt = conn.prepareStatement("SELECT email, password FROM User WHERE email = ?");
 			pstmt.setString(1, email);
 			ResultSet res = pstmt.executeQuery();
-			
+
+			// Should only return one result - duplicate emails should not exist
 			if (res.next()) {
 				String dbEmail = res.getString("email");
 				String dbPassword = res.getString("password");
-				
-				// Hash the password
-				String hash = BCrypt.hashpw(password, BCrypt.gensalt());
-				
-				System.out.println("email: " + email);
-				System.out.println("password: " + password);
-				System.out.println("hashed password: " + hash);
-				System.out.println("db hashed password: " + dbPassword);
 
-				if (email.equals(dbEmail) && BCrypt.checkpw(dbPassword, password)) {
-					response.getWriter().println("login done");
+				if (email.equals(dbEmail) && BCrypt.checkpw(password, dbPassword)) {
+					response.getWriter().println("login successful");
 				} else {
-					response.getWriter().println("login not done");
+					response.getWriter().println("username/password mismatch"); // confirms that user exists, privacy issues?
 				}
 			} else {
-				response.getWriter().println("login not done");
+				response.getWriter().println("user doesn't exist");
 			}
 		} catch (Exception e) {
 			log("MySQL Error: " + e);
 			System.exit(0);
+			return;
 		}
 		
 		//response.getWriter().println("session=" + request.getSession(true).getId());
