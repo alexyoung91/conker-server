@@ -3,13 +3,14 @@ Conker Server
 
 This application is a server for the Conker Android application. This server was written as part of Task 2 for the CS2001 module at Brunel University.
 
+
 Dependencies
 ------------
 
 * Javax Servlet (javax.servlet-3.0.0.v201112011016.jar)
 * Jetty All (jetty-all-9.0.4.v20130625.jar)
 * JSON-Java (jsonjava.jar) built from https://github.com/douglascrockford/JSON-java
-* Mysql Connector (mysql-connector-java-5.1.28-bin.jar)
+* MySQL Connector (mysql-connector-java-5.1.28-bin.jar)
 
 
 Build Instructions
