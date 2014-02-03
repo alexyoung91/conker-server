@@ -33,19 +33,25 @@ import org.eclipse.jetty.servlet.ServletHolder;
 
 public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
+		response.setContentType("application/json");
 		response.setStatus(HttpServletResponse.SC_OK);
+
+		JSONObject jsonResponse = new JSONObject();
 
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
 		if (email == null || email.isEmpty()) {
-			response.getWriter().println("please enter a username");
+			jsonResponse.put("loggedin", false);
+			jsonResponse.put("errormsg", "Please enter a username");
+			response.getWriter().println(jsonResponse.toString(4));
 			return;
 		}
 		
 		if (password == null || password.isEmpty()) {
-			response.getWriter().println("please enter a password");
+			jsonResponse.put("loggedin", false);
+			jsonResponse.put("errormsg", "Please enter a password");
+			response.getWriter().println(jsonResponse.toString(4));
 			return;
 		}
 		
@@ -65,15 +71,25 @@ public class LoginServlet extends HttpServlet {
 				String dbPassword = res.getString("password");
 
 				if (email.equals(dbEmail) && BCrypt.checkpw(password, dbPassword)) {
-					response.getWriter().println("login successful");
+					// set "logged in" session variable
+					jsonResponse.put("loggedin", true);
+					response.getWriter().println(jsonResponse.toString(4));
 				} else {
-					response.getWriter().println("username/password mismatch"); // confirms that user exists, privacy issues?
+					// confirms that user exists, privacy issues?
+					jsonResponse.put("loggedin", false);
+					jsonResponse.put("errormsg", "email/password mismatch");
+					response.getWriter().println(jsonResponse.toString(4));
 				}
 			} else {
-				response.getWriter().println("user doesn't exist");
+				jsonResponse.put("loggedin", false);
+				jsonResponse.put("errormsg", "user doesn't exist");
+				response.getWriter().println(jsonResponse.toString(4));
 			}
 		} catch (Exception e) {
 			log("MySQL Error: " + e);
+			jsonResponse.put("loggedin", false);
+			jsonResponse.put("errormsg", "mysql error: " + e);
+			response.getWriter().println(jsonResponse.toString(4));
 			System.exit(0);
 			return;
 		}
