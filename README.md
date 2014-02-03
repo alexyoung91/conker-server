@@ -1,7 +1,7 @@
 Conker Server
 =============
 
-This application is a server for the Conker Android application. This server was written as part of Task 2 for the CS2001 module. 
+This application is a server for the Conker Android application. This server was written as part of Task 2 for the CS2001 module at Brunel University. 
 
 Build Instructions
 ------------------
