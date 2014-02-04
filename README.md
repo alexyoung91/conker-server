@@ -11,6 +11,7 @@ Dependencies
 * Jetty All (jetty-all-9.0.4.v20130625.jar)
 * JSON-Java (jsonjava.jar) built from https://github.com/douglascrockford/JSON-java
 * MySQL Connector (mysql-connector-java-5.1.28-bin.jar)
+* jBCrypt (BCrypt.jar) v0.3 built from http://www.mindrot.org/projects/jBCrypt/
 
 
 Build Instructions
