@@ -31,6 +31,8 @@ class ProjectsServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setStatus(HttpServletResponse.SC_OK);
 		
+		/*
+		
 		String latitude = request.getParameter("lat");
 		String longitude = request.getParameter("long");
 		
@@ -85,6 +87,8 @@ class ProjectsServlet extends HttpServlet {
 		}
 		
 		conn = null;
+		
+		*/
 		
 		//response.getWriter().println("session=" + request.getSession(true).getId());
 	}
