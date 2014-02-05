@@ -2,11 +2,14 @@ package co.conker.entity;
 
 import co.conker.util.Date;
 import co.conker.util.Geolocation;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
+
 import org.mindrot.BCrypt;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+
 public class User {
+	private int			id;
 	private String 		firstName;
 	private String 		lastName;
 	private String 		email;
@@ -15,8 +18,11 @@ public class User {
 	private String 		organisation;
 	private Geolocation homeLocation;
 	private String 		passwordHash;
-
-	public User(String firstName, String lastName, String email, String gender, Date dob, String organisation, Geolocation homeLocation, String passwordHash) {
+	
+	private boolean	idSet;
+	
+	public User(int id, String firstName, String lastName, String email, String gender, Date dob, String organisation, Geolocation homeLocation, String passwordHash) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -25,6 +31,36 @@ public class User {
 		this.organisation = organisation;
 		this.homeLocation = homeLocation;
 		this.passwordHash = passwordHash;
+		
+		idSet = true;
+	}
+	
+	public User(String firstName, String lastName, String email, String gender, Date dob, String organisation, Geolocation homeLocation, String passwordHash) {
+		this.id = -1;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.gender = gender;
+		this.dob = dob;
+		this.organisation = organisation;
+		this.homeLocation = homeLocation;
+		this.passwordHash = passwordHash;
+		
+		idSet = false;
+	}
+	
+	public boolean setID(int id) {
+		if (!idSet) {
+			this.id = id;
+			idSet = true;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public int getID() {
+		return id;
 	}
 	
 	public String getFirstName() {

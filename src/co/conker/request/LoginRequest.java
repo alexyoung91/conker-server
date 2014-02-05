@@ -15,10 +15,14 @@ public class LoginRequest {
 	private String password;
 	private boolean valid;
 	private JSONObject jsonResponse;
+	
+	private User user;
 
 	public LoginRequest(HttpServletRequest request) {
 		email = request.getParameter("email");
 		password = request.getParameter("password");
+		
+		valid = false;
 		
 		jsonResponse = new JSONObject();
 		
@@ -36,13 +40,14 @@ public class LoginRequest {
 		
 		Database db = new Database();
 		
-		User user;
+		user = null;
 		try {
 			user = db.getUser(email);
 			
 			if (user.isPassword(password)) {
 				// set "logged in" session variable
 				jsonResponse.put("loggedin", true);
+				valid = true;
 			} else {
 				// confirms that user exists, privacy issues?
 				jsonResponse.put("loggedin", false);
@@ -67,6 +72,10 @@ public class LoginRequest {
 	
 	public boolean isValid() {
 		return valid;
+	}
+	
+	public User getUser() {
+		return user;
 	}
 	
 	public String getError() {

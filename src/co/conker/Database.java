@@ -37,10 +37,13 @@ public class Database {
 	}
 	
 	// USER RELATED
+	//
+	// Returns user ID
 	
-	public boolean addUser(User user) {
+	public int addUser(User user) {
 		connect();
 		
+		int id = -1;
 		try {
 		
 			String query = "INSERT INTO User " +
@@ -48,17 +51,23 @@ public class Database {
 						   "VALUES " +
 						   "(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-			PreparedStatement pstmt = conn.prepareStatement(query);
+			PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, user.getEmail());
 			pstmt.setString(2, user.getFirstName());
 			pstmt.setString(3, user.getLastName());
 			pstmt.setString(4, user.getGender());
 			pstmt.setString(5, user.getDOB().getString());
 			pstmt.setString(6, user.getOrganisation());
-			pstmt.setString(7, String.valueOf(user.getHomeLocation().getLatitude()));
-			pstmt.setString(8, String.valueOf(user.getHomeLocation().getLongitude()));
+			pstmt.setDouble(7, user.getHomeLocation().getLatitude());
+			pstmt.setDouble(8, user.getHomeLocation().getLongitude());
 			pstmt.setString(9, user.getPasswordHash());
-			pstmt.execute();
+			pstmt.executeUpdate();
+			
+			ResultSet res = pstmt.getGeneratedKeys();
+			
+			if (res.next()) {
+        		id = res.getInt(1);
+        	}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -67,16 +76,50 @@ public class Database {
 		
 		disconnect();
 		
-		return true;
+		return id;
 	}
 	
-	/*
-	
-	public User getUser(int id) {
-	
+	public User getUser(int id) throws Exception {
+		connect();
+		
+		User user = null;
+		
+		try {
+		
+			String query = "SELECT " +
+						   "id, email, firstName, lastName, gender, dob, organisation, homeLocationLat, homeLocationLong, password " +
+						   "FROM " +
+						   "User " +
+						   "WHERE " +
+						   "id = ?;";
+
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, String.valueOf(id));
+			ResultSet res = pstmt.executeQuery();
+			
+			if (res.next()) {
+				user = new User(res.getInt("id"),
+								res.getString("firstName"),
+								res.getString("lastName"),
+								res.getString("email"),
+								res.getString("gender"),
+								new Date(res.getString("dob")),
+								res.getString("organisation"),
+								new Geolocation(res.getString("homeLocationLat"), res.getString("homeLocationLong")),
+								res.getString("password"));
+			} else {
+				throw new Exception("UserDoesntExist");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		disconnect();
+		
+		return user;
 	}
-	
-	*/
 	
 	public User getUser(String email) throws Exception {
 		connect();
@@ -97,7 +140,8 @@ public class Database {
 			ResultSet res = pstmt.executeQuery();
 			
 			if (res.next()) {
-				user = new User(res.getString("firstName"),
+				user = new User(res.getInt("id"),
+								res.getString("firstName"),
 								res.getString("lastName"),
 								res.getString("email"),
 								res.getString("gender"),
@@ -151,36 +195,20 @@ public class Database {
 		return isAvailable;
 	}
 	
-	public boolean addUserImage(User user, UserImage userImage) {
+	public boolean addUserImage(UserImage userImage) {
 		connect();
 		
 		try {
 		
-			String query = "SELECT " +
-						   "id " +
-						   "FROM " +
-						   "User " +
-						   "WHERE " +
-						   "email = ?;";
+			String query = "INSERT INTO UserImage " +
+						   "(id, source, userID) " +
+						   "VALUES " +
+						   "(DEFAULT, ?, ?);";
 
 			PreparedStatement pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, user.getEmail());
-			ResultSet res = pstmt.executeQuery();
-			
-			String id;
-			if (res.next()) {
-				id = res.getString("id");
-			
-				String query2 = "INSERT INTO UserImage " +
-							   "(id, source, userID) " +
-							   "VALUES " +
-							   "(DEFAULT, ?, ?);";
-
-				PreparedStatement pstmt2 = conn.prepareStatement(query2);
-				pstmt2.setString(1, userImage.getSource());
-				pstmt2.setString(2, id);
-				pstmt2.execute();
-			}
+			pstmt.setString(1, userImage.getSource());
+			pstmt.setInt(2, userImage.getUserID());
+			pstmt.execute();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -192,19 +220,114 @@ public class Database {
 		return true;
 	}
 	
-	/*
-	
 	// PROJECT RELATED
 	
-	public boolean addProject(Project project) {
-	
+	public int addProject(Project project) {
+		connect();
+		
+		int id = -1;
+		try {
+		
+			String query = "INSERT INTO Project " +
+						   "(id, title, description, noVolunteersNeeded, startDate, endDate, locationLat, locationLong, userID) " +
+						   "VALUES " +
+						   "(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+			PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setString(1, project.getTitle());
+			pstmt.setString(2, project.getDescription());
+			pstmt.setInt(3, project.getNoVolunteersNeeded());
+			pstmt.setString(4, project.getStartDate().getString());
+			pstmt.setString(5, project.getEndDate().getString());
+			pstmt.setDouble(6, project.getLocation().getLatitude());
+			pstmt.setDouble(7, project.getLocation().getLongitude());
+			pstmt.setInt(8, project.getUserID());
+			pstmt.executeUpdate();
+			
+			ResultSet res = pstmt.getGeneratedKeys();
+			
+			if (res.next()) {
+        		id = res.getInt(1);
+        	}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		disconnect();
+		
+		return id;
 	}
 	
-	public Project getProject() {
+	/*
 	
+	public Project getProject() {
+		
+	}
+	
+	*/
+	
+	public boolean isProjectImageSourceAvailable(String source) {
+		boolean isAvailable = true;
+	
+		connect();
+		
+		try {
+		
+			String query = "SELECT " +
+						   "id " +
+						   "FROM " +
+						   "ProjectImage " +
+						   "WHERE " +
+						   "source = ?;";
+
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, source);
+			ResultSet res = pstmt.executeQuery();
+			
+			if (res.next()) {
+				isAvailable = false;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		disconnect();
+		
+		return isAvailable;
+	}
+	
+	public boolean addProjectImage(ProjectImage projectImage) {
+		connect();
+		
+		try {
+		
+			String query = "INSERT INTO ProjectImage " +
+						   "(id, source, projectID) " +
+						   "VALUES " +
+						   "(DEFAULT, ?, ?);";
+
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, projectImage.getSource());
+			pstmt.setInt(2, projectImage.getProjectID());
+			pstmt.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		disconnect();
+		
+		return true;
 	}
 	
 	// SEARCH RELATED
+	
+	/*
 	
 	public boolean addSearch(Search search) {
 	

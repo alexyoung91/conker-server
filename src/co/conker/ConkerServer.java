@@ -53,9 +53,9 @@ public class ConkerServer {
 		//context.addServlet(new ServletHolder(new RegisterServlet()), "/register/*");
 		
 		// Post a project
-		ServletHolder sh2 = new ServletHolder(new ProjectPostServlet());
+		ServletHolder sh2 = new ServletHolder(new PostProjectServlet());
 		sh2.getRegistration().setMultipartConfig(new MultipartConfigElement("/home/ubuntu/ConkerResources/projectImages", 1048576, 1048576, 262144));
-		context.addServlet(sh2, "/projectPost/*");
+		context.addServlet(sh2, "/postProject/*");
 		//context.addServlet(new ServletHolder(new ProjectPostServlet()), "/projectPost/*");
 		
 		// Get projects nearest to a specified lat and long

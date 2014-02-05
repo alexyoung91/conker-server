@@ -34,11 +34,23 @@ public class FileStorage {
 		}
 	}
 	
-	/*
-	public void addProjectImage(Project project) {
-	
+	public void addProjectImage(ProjectImage projectImage) {
+		String path = projectImageDirectory + projectImage.getSource() + ".png";
+		System.out.println("writing image to: " + path);
+		try {
+			//projectImage.getPart().write(path);
+			
+			InputStream in = projectImage.getPart().getInputStream();
+		    OutputStream out = new FileOutputStream(path);
+		    copy(in, out); //The function is below
+		    out.flush();
+		    out.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
 	}
-	*/
 	
 	public static long copy(InputStream input, OutputStream output) throws IOException {
 		byte[] buffer = new byte[4096];

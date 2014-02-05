@@ -1,40 +1,57 @@
 package co.conker.entity;
 
 import co.conker.util.Date;
-import javax.servlet.http.HttpServletRequest;
+import co.conker.util.Geolocation;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
  
 public class Project {
-	private String title;
-	private String description;
-	private int    noVolunteersNeeded;
-	private Date   start;
-	private Date   end;
-	private double locationLat;
-	private double locationLong;
-	private User   author;
+	private int			id;
+	private String 		title;
+	private String 		description;
+	private int    		noVolunteersNeeded;
+	private Date   		start;
+	private Date   		end;
+	private Geolocation location;
+	private int		  	userID;
 	
-	/*
+	private boolean	idSet;
 	
-	public Project(HttpServletRequest request) {
-		title = request.getParameter("title");
-		description = request.getParameter("description");
-		noVolunteersNeeded = Integer.parseInt(request.getParameter("noVolunteersNeeded"));
+	public Project(int id, String title, String description, int noVolunteersNeeded, Date start, Date end, Geolocation location, int userID) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.noVolunteersNeeded = noVolunteersNeeded;
+		this.start = start;
+		this.end = end;
+		this.location = location;
+		this.userID = userID;
+	}
+	
+	public Project(String title, String description, int noVolunteersNeeded, Date start, Date end, Geolocation location, int userID) {
+		this.title = title;
+		this.description = description;
+		this.noVolunteersNeeded = noVolunteersNeeded;
+		this.start = start;
+		this.end = end;
+		this.location = location;
+		this.userID = userID;
+	}
+	
+	public boolean setID(int id) {
+		if (!idSet) {
+			this.id = id;
+			idSet = true;
+			return true;
+		}
 		
-		start = new Date(request.getParameter("startDay"),
-						  request.getParameter("startMonth"),
-						  request.getParameter("startYear"));
-		
-		end = new Date(request.getParameter("endDay"),
-						  request.getParameter("endMonth"),
-						  request.getParameter("endYear"));
-		
-		locationLat = request.getParameter("locationLat");
-		locationLong = request.getParameter("locationLong");
-		
-		userID = request.getParameter("userID");
+		return false;
+	}
+	
+	public int getID() {
+		return id;
 	}
 	
 	public String getTitle() {
@@ -49,12 +66,8 @@ public class Project {
 		return noVolunteersNeeded;
 	}
 	
-	public int getLocationLat() {
-		return locationLat;
-	}
-	
-	public int getLocationLong() {
-		return locationLong;
+	public Geolocation getLocation() {
+		return location;
 	}
  
 	public Date getStartDate() {
@@ -65,10 +78,7 @@ public class Project {
 		return end;
 	}
 	
-	public User getUser() {
-		return user;
-	}
-	
-	*/
-	
+	public int getUserID() {
+		return userID;
+	}	
 }

@@ -33,8 +33,11 @@ public class RegisterServlet extends HttpServlet {
 			UserImage userImage = registerRequest.getUserImage();
 			
 			Database db = new Database();
-			db.addUser(user);
-			db.addUserImage(user, userImage);
+			int userID = db.addUser(user);
+			user.setID(userID);
+			
+			userImage.setUserID(userID);
+			db.addUserImage(userImage);
 			
 			FileStorage fs = new FileStorage();
 			fs.addUserImage(userImage);
