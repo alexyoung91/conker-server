@@ -2,6 +2,7 @@ package co.conker;
 
 import co.conker.entity.*;
 import co.conker.util.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -116,6 +117,79 @@ public class Database {
 		disconnect();
 		
 		return user;
+	}
+	
+	public boolean isUserImageSourceAvailable(String source) {
+		boolean isAvailable = true;
+	
+		connect();
+		
+		try {
+		
+			String query = "SELECT " +
+						   "id " +
+						   "FROM " +
+						   "UserImage " +
+						   "WHERE " +
+						   "source = ?;";
+
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, source);
+			ResultSet res = pstmt.executeQuery();
+			
+			if (res.next()) {
+				isAvailable = false;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		disconnect();
+		
+		return isAvailable;
+	}
+	
+	public boolean addUserImage(User user, UserImage userImage) {
+		connect();
+		
+		try {
+		
+			String query = "SELECT " +
+						   "id " +
+						   "FROM " +
+						   "User " +
+						   "WHERE " +
+						   "email = ?;";
+
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, user.getEmail());
+			ResultSet res = pstmt.executeQuery();
+			
+			String id;
+			if (res.next()) {
+				id = res.getString("id");
+			
+				String query2 = "INSERT INTO UserImage " +
+							   "(id, source, userID) " +
+							   "VALUES " +
+							   "(DEFAULT, ?, ?);";
+
+				PreparedStatement pstmt2 = conn.prepareStatement(query2);
+				pstmt2.setString(1, userImage.getSource());
+				pstmt2.setString(2, id);
+				pstmt2.execute();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		disconnect();
+		
+		return true;
 	}
 	
 	/*

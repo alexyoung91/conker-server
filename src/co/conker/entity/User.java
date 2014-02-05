@@ -3,6 +3,7 @@ package co.conker.entity;
 import co.conker.util.Date;
 import co.conker.util.Geolocation;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 import org.mindrot.BCrypt;
 
 public class User {

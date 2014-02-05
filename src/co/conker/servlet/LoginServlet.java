@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
 		if (loginRequest.isValid()) {
 			// Associate user with session?
 		}
-			
+		
 		out.println(loginRequest.getJSONResponse());
 		
 		//response.getWriter().println("session=" + request.getSession(true).getId());

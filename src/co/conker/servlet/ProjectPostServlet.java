@@ -36,20 +36,8 @@ import java.util.Date;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-/*
-@WebServlet("/ProjectPostServlet")
-@MultipartConfig(location="home/ubuntu/ConkerResources/tmp",
-				 fileSizeThreshold=1024*1024*10,    // 10 MB 
-                 maxFileSize=1024*1024*50,          // 50 MB
-                 maxRequestSize=1024*1024*100)      // 100 MB
-*/
-
-@WebServlet("/projectPost")
-@MultipartConfig
 public class ProjectPostServlet extends HttpServlet {
-	//call post method 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
-	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		response.setStatus(HttpServletResponse.SC_OK);
 		
