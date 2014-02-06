@@ -20,6 +20,8 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
+// Class created from modified version of: http://balusc.blogspot.co.uk/2007/04/imageservlet.html
+
 public class GetProjectImageServlet extends HttpServlet {
 
 	// Constants ----------------------------------------------------------------------------------
