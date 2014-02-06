@@ -114,7 +114,6 @@ public class GetUserImageServlet extends HttpServlet {
                 output.write(buffer, 0, length);
             }
         } finally {
-            // Gently close streams.
             output.close();
             input.close();
         }
