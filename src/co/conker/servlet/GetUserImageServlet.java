@@ -17,22 +17,10 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.Date;
-
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-public class ProjectImageServlet extends HttpServlet {
+public class GetUserImageServlet extends HttpServlet {
 
 	// Constants ----------------------------------------------------------------------------------
 
@@ -47,7 +35,7 @@ public class ProjectImageServlet extends HttpServlet {
     public void init() throws ServletException {
 
         // Define base path somehow. You can define it as init-param of the servlet.
-        this.imagePath = "/home/ubuntu/Conker-Server/res/projectImages";
+        this.imagePath = "/home/ubuntu/Conker-Server/res/userImages";
 
         // In a Windows environment with the Applicationserver running on the
         // c: volume, the above path is exactly the same as "c:\images".
@@ -67,18 +55,19 @@ public class ProjectImageServlet extends HttpServlet {
 		
 		// Get requested image by path info.
         String requestedImage = request.getPathInfo();
-		System.out.println(requestedImage);
 
         // Check if file name is actually supplied to the request URI.
-        if (requestedImage == null) {
+        if (requestedImage == null || requestedImage.length() != 33) {
             // Do your thing if the image is not supplied to the request URI.
             // Throw an exception, or send 404, or show default/warning image, or just ignore it.
             response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
             return;
         }
+        
+        requestedImage = requestedImage.substring(1, requestedImage.length());
 
         // Decode the file name (might contain spaces and on) and prepare file object.
-        File image = new File(imagePath, URLDecoder.decode(requestedImage, "UTF-8"));
+        File image = new File(imagePath, URLDecoder.decode(requestedImage + ".png", "UTF-8"));
 
         // Check if file actually exists in filesystem.
         if (!image.exists()) {

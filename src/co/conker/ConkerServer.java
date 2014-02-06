@@ -62,7 +62,10 @@ public class ConkerServer {
         context.addServlet(new ServletHolder(new ProjectsServlet()), "/projects/*");
 		
 		// Get project image by specifying project ID
-        context.addServlet(new ServletHolder(new ProjectImageServlet()), "/projectImage/*");
+        context.addServlet(new ServletHolder(new GetProjectImageServlet()), "/projectImage/*");
+        
+        // Get user image by specifying project ID
+        context.addServlet(new ServletHolder(new GetUserImageServlet()), "/userImage/*");
 		 
         server.start();
         server.join();
