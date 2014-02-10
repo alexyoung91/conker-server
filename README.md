@@ -47,3 +47,12 @@ To clean-build into classes and runnable jar file without running:
 ant clean-build
 ```
 
+TODO
+----
+
+* Support multiple image formats and convert to JPG server-side. Image formats to support: JPG, PNG (Maybe GIF, BMP). Image conversion functionality will ideally be shared between servlets that require it.
+* Implement search functionality for members and project
+* Implement starring functionality
+* Implement volunteering functionality
+* Include checks for invalid input in forms such as registration e.g. correct email address format etc
+
