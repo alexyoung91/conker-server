@@ -1,3 +1,9 @@
+/**
+ * ProjectImage
+ *
+ * Models a project image as stored in the database
+ */
+
 package co.conker.entity;
 
 import javax.servlet.http.Part;

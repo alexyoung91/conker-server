@@ -1,3 +1,9 @@
+/**
+ * Database
+ * 
+ * This class communicates with the MySQL database
+ */
+
 package co.conker;
 
 import co.conker.entity.*;

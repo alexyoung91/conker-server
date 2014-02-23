@@ -1,3 +1,9 @@
+/**
+ * Project
+ *
+ * Models a project as stored in the database
+ */
+
 package co.conker.entity;
 
 import co.conker.util.Date;
