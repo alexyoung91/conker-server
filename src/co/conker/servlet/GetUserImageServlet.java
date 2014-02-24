@@ -41,8 +41,12 @@ public class GetUserImageServlet extends HttpServlet {
         
         requestedImage = requestedImage.substring(1, requestedImage.length());
 
+		System.out.println(requestedImage);
+
         FileStorage fs = new FileStorage();
-        File image = fs.getProjectImage(requestedImage);
+        File image = fs.getUserImage(requestedImage);
+        
+        System.out.println(image.exists());
 
         // Check if file actually exists in filesystem.
         if (!image.exists()) {

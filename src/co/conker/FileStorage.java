@@ -77,7 +77,8 @@ public class FileStorage {
 	
 	public File getUserImage(String source) throws IOException {
 		// Decode the file name (might contain spaces and on) and prepare file object.
-		return new File(userImageDirectory, URLDecoder.decode(source + ".png", "UTF-8"));
+		System.out.println(userImageDirectory + source + ".png");
+		return new File(userImageDirectory, URLDecoder.decode(userImageDirectory + source + ".png", "UTF-8"));
 	}
 	
 	/**
@@ -86,7 +87,7 @@ public class FileStorage {
 	
 	public File getProjectImage(String source) throws IOException {
 		// Decode the file name (might contain spaces and on) and prepare file object.
-		return new File(projectImageDirectory, URLDecoder.decode(source + ".png", "UTF-8"));
+		return new File(projectImageDirectory, URLDecoder.decode(projectImageDirectory + source + ".png", "UTF-8"));
 	}
 	
 	/**
