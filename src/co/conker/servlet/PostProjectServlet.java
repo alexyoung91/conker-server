@@ -25,12 +25,6 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
