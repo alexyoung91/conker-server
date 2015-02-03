@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
- 
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
- 
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
@@ -27,7 +27,7 @@ public class GetUserImageServlet extends HttpServlet {
 	private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		// Get requested image by path info.
         String requestedImage = request.getPathInfo();
 
@@ -38,8 +38,8 @@ public class GetUserImageServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
             return;
         }
-        
-        requestedImage = requestedImage.substring(1, requestedImage.length())
+
+        requestedImage = requestedImage.substring(1, requestedImage.length());
 
         FileStorage fs = new FileStorage();
         File image = fs.getUserImage(requestedImage);
@@ -82,11 +82,10 @@ public class GetUserImageServlet extends HttpServlet {
 
             // Write file contents to response.
             FileStorage.copy(input, output, DEFAULT_BUFFER_SIZE);
-            
+
         } finally {
             output.close();
             input.close();
         }
 	}
 }
-
