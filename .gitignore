@@ -1,4 +1,7 @@
-build/
-res/projectImages/
-res/userImages/
+.DS_Store
 
+build/
+
+res/projectImages/
+
+res/userImages/
