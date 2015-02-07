@@ -6,6 +6,7 @@
 
 package co.conker;
 
+import co.conker.DBException;
 import co.conker.entity.*;
 import co.conker.util.*;
 
@@ -19,7 +20,7 @@ import java.sql.PreparedStatement;
 public class Database {
 	private static final String url = "jdbc:mysql://localhost:3306/Conker";
 	private static final String username = "conker";
-	private static final String password = "lolbanter2910";
+	private static final String password = "qNMwUQ9XX5Yx7AMX";
 	
 	private Connection conn;
 	
@@ -52,7 +53,7 @@ public class Database {
 		int id = -1;
 		try {
 		
-			String query = "INSERT INTO User " +
+			String query = "INSERT INTO users " +
 						   "(id, email, firstName, lastName, gender, dob, organisation, homeLocationLat, homeLocationLong, password) " +
 						   "VALUES " +
 						   "(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -93,9 +94,9 @@ public class Database {
 		try {
 		
 			String query = "SELECT " +
-						   "id, email, firstName, lastName, gender, dob, organisation, homeLocationLat, homeLocationLong, password " +
+						   "id, email, first_name, last_name, gender, dob, organisation, home_location_lat, home_location_long, password " +
 						   "FROM " +
-						   "User " +
+						   "users " +
 						   "WHERE " +
 						   "id = ?;";
 
@@ -105,13 +106,13 @@ public class Database {
 			
 			if (res.next()) {
 				user = new User(res.getInt("id"),
-								res.getString("firstName"),
-								res.getString("lastName"),
+								res.getString("first_name"),
+								res.getString("last_name"),
 								res.getString("email"),
 								res.getString("gender"),
 								new Date(res.getString("dob")),
 								res.getString("organisation"),
-								new Geolocation(res.getString("homeLocationLat"), res.getString("homeLocationLong")),
+								new Geolocation(res.getString("home_location_lat"), res.getString("home_location_long")),
 								res.getString("password"));
 			} else {
 				throw new Exception("UserDoesntExist");
@@ -127,7 +128,7 @@ public class Database {
 		return user;
 	}
 	
-	public User getUser(String email) throws Exception {
+	public User getUser(String email) throws DBException {
 		connect();
 		
 		User user = null;
@@ -135,9 +136,9 @@ public class Database {
 		try {
 		
 			String query = "SELECT " +
-						   "id, email, firstName, lastName, gender, dob, organisation, homeLocationLat, homeLocationLong, password " +
+						   "id, email, first_name, last_name, gender, dob, organisation, home_location_lat, home_location_long, password " +
 						   "FROM " +
-						   "User " +
+						   "users " +
 						   "WHERE " +
 						   "email = ?;";
 
@@ -147,16 +148,16 @@ public class Database {
 			
 			if (res.next()) {
 				user = new User(res.getInt("id"),
-								res.getString("firstName"),
-								res.getString("lastName"),
+								res.getString("first_name"),
+								res.getString("last_name"),
 								res.getString("email"),
 								res.getString("gender"),
 								new Date(res.getString("dob")),
 								res.getString("organisation"),
-								new Geolocation(res.getString("homeLocationLat"), res.getString("homeLocationLong")),
+								new Geolocation(res.getString("home_location_lat"), res.getString("home_location_long")),
 								res.getString("password"));
 			} else {
-				throw new Exception("UserDoesntExist");
+				throw new DBException("UserDoesntExist");
 			}
 			
 		} catch (SQLException e) {

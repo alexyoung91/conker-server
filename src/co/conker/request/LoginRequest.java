@@ -1,7 +1,11 @@
 package co.conker.request;
 
 import co.conker.Database;
+import co.conker.DBException;
 import co.conker.entity.User;
+import co.conker.util.RequestUtils;
+
+import java.io.IOException;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -11,62 +15,75 @@ import org.mindrot.BCrypt;
 import javax.servlet.http.HttpServletRequest;
 
 public class LoginRequest {
-	private String email;
-	private String password;
+	
 	private boolean valid;
 	private JSONObject jsonResponse;
 	
 	private User user;
 
 	public LoginRequest(HttpServletRequest request) {
-		email = request.getParameter("email");
-		password = request.getParameter("password");
-		
+
+		String email;
+		String password;
+		String body;
+		JSONObject jsonRequest;
+		Database db;
+
 		valid = false;
-		
-		jsonResponse = new JSONObject();
-		
-		if (email == null || email.isEmpty()) {
-			jsonResponse.put("loggedin", false);
-			jsonResponse.put("errormsg", "Please enter a username");
-			return;
-		}
-		
-		if (password == null || password.isEmpty()) {
-			jsonResponse.put("loggedin", false);
-			jsonResponse.put("errormsg", "Please enter a password");
-			return;
-		}
-		
-		Database db = new Database();
-		
 		user = null;
+
 		try {
+			body = RequestUtils.getBody(request);
+
+			jsonRequest = new JSONObject(body);
+
+			email = jsonRequest.getString("email");
+			password = jsonRequest.getString("password");
+
+			jsonResponse = new JSONObject();
+	
+			if (email == null || email.isEmpty()) {
+				jsonResponse.put("status", false);
+				jsonResponse.put("msg", "Please enter an email");
+				return;
+			}
+			
+			if (password == null || password.isEmpty()) {
+				jsonResponse.put("status", false);
+				jsonResponse.put("msg", "Please enter a password");
+				return;
+			}
+
+			db = new Database();
+
 			user = db.getUser(email);
 			
 			if (user.isPassword(password)) {
 				// set "logged in" session variable
-				jsonResponse.put("loggedin", true);
+				jsonResponse.put("status", true);
 				valid = true;
 			} else {
 				// confirms that user exists, privacy issues?
-				jsonResponse.put("loggedin", false);
-				jsonResponse.put("errormsg", "email/password mismatch");
+				jsonResponse.put("status", false);
+				jsonResponse.put("msg", "Invalid email or password");
 			}
-		} catch (Exception e) {
+		} catch (DBException e) {
 			switch (e.getMessage()) {
-				case "UserDoesntExist": {
-					jsonResponse.put("loggedin", false);
-					jsonResponse.put("errormsg", "user doesn't exist");
+				case "UserDoesntExist":
+					jsonResponse.put("status", false);
+					jsonResponse.put("msg", "Invalid email or password");
 					break;
-				}
-				
-				default: {
-					jsonResponse.put("loggedin", false);
-					jsonResponse.put("errormsg", "unknown error");
+				default:
+					jsonResponse.put("status", false);
+					jsonResponse.put("msg", "Error logging in");
 					break;
-				}
 			}
+		} catch (JSONException e) {
+			System.out.println("json exception bein");
+			return;
+		} catch (IOException e) {
+			System.out.println("io exception bein");
+			return;
 		}
 	}
 	

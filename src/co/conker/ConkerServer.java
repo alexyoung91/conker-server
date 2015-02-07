@@ -9,13 +9,7 @@
 
 package co.conker;
 
-import co.conker.servlet.*;
-
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,9 +17,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.MultipartConfigElement;
 
-import java.util.Date;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+
+import co.conker.servlet.*;
+
 public class ConkerServer {
-	public static final boolean debug = false;
+	public static final boolean debug = true;
 	
 	/**
 	 * Application entry point
