@@ -6,7 +6,7 @@
  * - Reload privileges
  */
 
-CREATE USER 'conker'@'localhost' IDENTIFIED BY '********';
+CREATE USER 'conker'@'localhost' IDENTIFIED BY 'qNMwUQ9XX5Yx7AMX';
 GRANT ALL PRIVILEGES ON conker.* TO 'conker'@'localhost';
 FLUSH PRIVILEGES;
 
@@ -24,7 +24,7 @@ USE conker;
  * InnoDB for foreign key support
  */
 
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS users (
 	id INT(11) NOT NULL AUTO_INCREMENT,
 	email VARCHAR(255) NOT NULL, /* email max length is 256 */
 	first_name VARCHAR(64) NOT NULL,
