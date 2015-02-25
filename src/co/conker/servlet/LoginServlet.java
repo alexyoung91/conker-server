@@ -24,8 +24,8 @@ public class LoginServlet extends HttpServlet {
 		if (loginRequest.isValid()) {
 			// Associate user with session?
 			session = request.getSession(true);
-			session.setAttribute("LoggedIn", true);
-			session.setAttribute("User", loginRequest.getUser());
+			session.setAttribute("logged_in", true);
+			session.setAttribute("user", loginRequest.getUser());
 		}
 		
 		response.getWriter().println(loginRequest.getJSONResponse());

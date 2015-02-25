@@ -40,6 +40,8 @@ public class LoginRequest {
 			email = jsonRequest.getString("email");
 			password = jsonRequest.getString("password");
 
+			System.out.println("Login request received: " + jsonRequest.toString());
+
 			jsonResponse = new JSONObject();
 	
 			if (email == null || email.isEmpty()) {

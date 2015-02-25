@@ -45,8 +45,9 @@ public class ConkerServer {
 		// Display the development forms
 		context.addServlet(new ServletHolder(new DefaultServlet()), "/*");
 		
-		// Login
+		// Logging in and out
 		context.addServlet(new ServletHolder(new LoginServlet()), "/login/*");
+		context.addServlet(new ServletHolder(new LogoutServlet()), "/logout/*");
 		
 		// Post a project
 		ServletHolder sh = new ServletHolder(new RegisterServlet());
