@@ -1,8 +1,8 @@
-package co.conker;
+package co.conker.server;
 
-import co.conker.entity.Project;
-import co.conker.entity.ProjectImage;
-import co.conker.request.PostProjectRequest;
+import co.conker.server.entity.Project;
+import co.conker.server.entity.ProjectImage;
+import co.conker.server.request.PostProjectRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

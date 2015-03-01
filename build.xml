@@ -5,7 +5,7 @@
 	<property name="classes.dir" value="${build.dir}/classes" />
 	<property name="lib.dir" value="lib" />
 	<property name="jar.dir" value="${build.dir}/jar" />
-	<property name="main-class" value="co.conker.ConkerServer" />
+	<property name="main-class" value="co.conker.server.ConkerServer" />
 
 	<path id="classpath">
 		<fileset dir="${lib.dir}" includes="**/*.jar" />

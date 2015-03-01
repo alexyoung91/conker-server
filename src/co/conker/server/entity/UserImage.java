@@ -4,7 +4,7 @@
  * Models a user image as stored in the database
  */
 
-package co.conker.entity;
+package co.conker.server.entity;
 
 import javax.servlet.http.Part;
 

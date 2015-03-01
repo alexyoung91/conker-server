@@ -1,9 +1,9 @@
-package co.conker.request;
+package co.conker.server.request;
 
-import co.conker.Database;
-import co.conker.DBException;
-import co.conker.entity.User;
-import co.conker.util.RequestUtils;
+import co.conker.server.Database;
+import co.conker.server.DBException;
+import co.conker.server.entity.User;
+import co.conker.server.util.RequestUtils;
 
 import java.io.IOException;
 

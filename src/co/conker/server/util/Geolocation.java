@@ -1,4 +1,4 @@
-package co.conker.util;
+package co.conker.server.util;
 
 public class Geolocation {
 	private double latitude;

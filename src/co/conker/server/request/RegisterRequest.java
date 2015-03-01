@@ -1,11 +1,11 @@
-package co.conker.request;
+package co.conker.server.request;
 
-import co.conker.Database;
-import co.conker.entity.User;
-import co.conker.entity.UserImage;
-import co.conker.util.Date;
-import co.conker.util.Geolocation;
-import co.conker.util.FormUtils;
+import co.conker.server.Database;
+import co.conker.server.entity.User;
+import co.conker.server.entity.UserImage;
+import co.conker.server.util.Date;
+import co.conker.server.util.Geolocation;
+import co.conker.server.util.FormUtils;
 
 import java.util.Random;
 

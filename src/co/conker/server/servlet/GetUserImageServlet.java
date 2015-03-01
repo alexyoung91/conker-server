@@ -1,4 +1,4 @@
-package co.conker;
+package co.conker.server;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

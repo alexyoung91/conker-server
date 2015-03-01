@@ -6,10 +6,10 @@
  * This class saves images to and retrieves images from disk storage
  */
 
-package co.conker;
+package co.conker.server;
 
-import co.conker.entity.*;
-import co.conker.util.*;
+import co.conker.server.entity.*;
+import co.conker.server.util.*;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

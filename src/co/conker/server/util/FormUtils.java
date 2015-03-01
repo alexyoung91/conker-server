@@ -1,4 +1,4 @@
-package co.conker.util;
+package co.conker.server.util;
 
 import java.util.Scanner;
 

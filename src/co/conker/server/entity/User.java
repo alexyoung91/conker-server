@@ -4,10 +4,10 @@
  * Models a user as stored in the database
  */
 
-package co.conker.entity;
+package co.conker.server.entity;
 
-import co.conker.util.Date;
-import co.conker.util.Geolocation;
+import co.conker.server.util.Date;
+import co.conker.server.util.Geolocation;
 
 import org.mindrot.BCrypt;
 

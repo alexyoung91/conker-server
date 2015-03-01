@@ -7,7 +7,7 @@
  *
  */
 
-package co.conker;
+package co.conker.server;
 
 import java.util.Date;
 
@@ -23,7 +23,7 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import co.conker.servlet.*;
+import co.conker.server.servlet.*;
 
 public class ConkerServer {
 	public static final boolean debug = true;

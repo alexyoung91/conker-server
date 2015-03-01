@@ -1,8 +1,8 @@
-package co.conker.servlet;
+package co.conker.server.servlet;
 
-import co.conker.Database;
-import co.conker.entity.User;
-import co.conker.request.LoginRequest;
+import co.conker.server.Database;
+import co.conker.server.entity.User;
+import co.conker.server.request.LoginRequest;
 
 import java.io.IOException;
 import java.io.PrintWriter;

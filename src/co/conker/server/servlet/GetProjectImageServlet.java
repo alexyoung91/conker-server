@@ -1,6 +1,6 @@
 // Class created from modified version of: http://balusc.blogspot.co.uk/2007/04/imageservlet.html
 
-package co.conker;
+package co.conker.server;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

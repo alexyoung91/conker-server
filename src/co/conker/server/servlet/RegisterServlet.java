@@ -1,10 +1,10 @@
-package co.conker.servlet;
+package co.conker.server.servlet;
 
-import co.conker.Database;
-import co.conker.FileStorage;
-import co.conker.entity.User;
-import co.conker.entity.UserImage;
-import co.conker.request.RegisterRequest;
+import co.conker.server.Database;
+import co.conker.server.FileStorage;
+import co.conker.server.entity.User;
+import co.conker.server.entity.UserImage;
+import co.conker.server.request.RegisterRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

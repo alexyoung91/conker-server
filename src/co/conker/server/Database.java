@@ -4,11 +4,11 @@
  * This class communicates with the MySQL database
  */
 
-package co.conker;
+package co.conker.server;
 
-import co.conker.DBException;
-import co.conker.entity.*;
-import co.conker.util.*;
+import co.conker.server.DBException;
+import co.conker.server.entity.*;
+import co.conker.server.util.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
